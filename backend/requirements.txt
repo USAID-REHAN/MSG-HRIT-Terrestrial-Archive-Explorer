@@ -1,0 +1,21 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+sqlalchemy==2.0.36
+aiosqlite==0.20.0
+httpx==0.28.1
+beautifulsoup4==4.12.3
+pydantic==2.10.4
+pydantic-settings==2.7.0
+python-multipart==0.0.20
+Pillow>=11.0.0
+psutil>=6.0.0
+numpy>=2.0.0
+
+# Satellite processing
+satpy>=0.52.0
+pyspectral>=0.13.0
+pyresample>=1.30.0
+xarray>=2024.0.0
+dask>=2024.0.0
+pyyaml>=6.0.2
+weasyprint==69.0

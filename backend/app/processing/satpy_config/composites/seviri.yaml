@@ -1,0 +1,460 @@
+sensor_name: visir/seviri
+
+composites:
+
+  # Standard SEVIRI-only RGBs (app extras). Channel recipes follow common
+  # EUMETSAT / GEO RGB practice and stay on the shared 3 km IR grid.
+
+  water_vapors1:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - IR_108
+      - WV_062
+      - WV_073
+    standard_name: water_vapors1
+
+  _mid_vapor_seviri:
+    compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+    prerequisites:
+      - WV_073
+      - WV_062
+    standard_name: mid_vapor
+
+  water_vapors2:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - _mid_vapor_seviri
+      - WV_073
+      - WV_062
+    standard_name: water_vapors2
+
+  fire_temperature_eumetsat:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - IR_039
+      - IR_108
+      - IR_120
+    standard_name: fire_temperature
+
+  cloud_convective_storms:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - WV_062
+          - WV_073
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_039
+          - IR_108
+      - IR_108
+    standard_name: convection
+
+  dust_cloud:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_120
+          - IR_108
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_108
+          - IR_087
+      - IR_108
+    standard_name: dust
+
+  ir_window_sandwich:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - IR_087
+      - IR_108
+      - IR_120
+    standard_name: ir_overview
+
+  airmass_jet:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - WV_062
+          - WV_073
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_097
+          - IR_108
+      - WV_062
+    standard_name: airmass
+
+  night_microphysics_simple:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_120
+          - IR_108
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_108
+          - IR_039
+      - IR_108
+    standard_name: night_microphysics
+
+  wv_diff_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - WV_062
+      - WV_073
+      - IR_134
+    standard_name: water_vapors1
+
+  split_window_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - IR_108
+      - IR_120
+      - IR_134
+    standard_name: ir_overview
+
+  ozone_airmass:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_097
+          - IR_087
+      - WV_062
+      - IR_108
+    standard_name: airmass
+
+  thermal_triplet:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - IR_039
+      - IR_087
+      - IR_108
+    standard_name: cloudtop
+
+  moisture_ridge:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - WV_062
+      - IR_108
+      - IR_120
+    standard_name: water_vapors1
+
+  tropopause_fold:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - WV_062
+          - WV_073
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_097
+          - IR_108
+      - IR_108
+    standard_name: airmass
+
+  cold_cloud_tops:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - IR_108
+      - IR_120
+      - IR_134
+    standard_name: cloudtop
+
+  night_convection:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - WV_062
+          - WV_073
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_039
+          - IR_108
+      - IR_120
+    standard_name: convection
+
+  so2_proxy:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_087
+          - IR_108
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_108
+          - IR_120
+      - IR_108
+    standard_name: ash
+
+  low_cloud_night:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites:
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_108
+          - IR_039
+      - compositor: !!python/name:satpy.composites.arithmetic.DifferenceCompositor
+        prerequisites:
+          - IR_120
+          - IR_108
+      - IR_108
+    standard_name: night_fog
+
+  # Additional diagnostic RGBs. Each public recipe has a distinct ordered
+  # channel assignment and uses only channels present in MSG HRIT Native.
+  upper_tropospheric_wv:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_062, WV_073, IR_108]
+    standard_name: water_vapors1
+
+  mid_tropospheric_wv:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_073, IR_108, IR_120]
+    standard_name: water_vapors2
+
+  lower_tropospheric_wv:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_108, WV_073, IR_134]
+    standard_name: water_vapors1
+
+  wv_layer_gradient:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_062, IR_134, WV_073]
+    standard_name: water_vapors2
+
+  dry_intrusion_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_062, IR_097, WV_073]
+    standard_name: airmass
+
+  subtropical_jet_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_073, IR_097, WV_062]
+    standard_name: airmass
+
+  moisture_transport_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_073, IR_120, WV_062]
+    standard_name: water_vapors1
+
+  upper_level_dynamics:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_062, IR_108, IR_097]
+    standard_name: airmass
+
+  tropopause_moisture:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_097, WV_073, IR_134]
+    standard_name: airmass
+
+  stratospheric_intrusion:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_134, IR_097, WV_062]
+    standard_name: airmass
+
+  enhanced_dust_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_120, IR_108, IR_087]
+    standard_name: dust
+
+  mineral_dust_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_108, IR_087, IR_120]
+    standard_name: dust
+
+  desert_dust_night:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_120, IR_087, IR_108]
+    standard_name: dust
+
+  airborne_dust_proxy:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_087, IR_120, IR_108]
+    standard_name: dust
+
+  volcanic_ash_enhanced:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_120, IR_108, IR_039]
+    standard_name: ash
+
+  volcanic_so2_enhanced:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_087, IR_108, IR_097]
+    standard_name: ash
+
+  silicate_ash_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_108, IR_120, IR_087]
+    standard_name: ash
+
+  ash_dust_discrimination:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_097, IR_120, IR_087]
+    standard_name: ash
+
+  split_window_ash:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_120, IR_108, IR_134]
+    standard_name: ash
+
+  cloud_phase_thermal:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_087, IR_134, IR_108]
+    standard_name: cloudtop
+
+  cloud_height_thermal:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_108, IR_134, IR_120]
+    standard_name: cloudtop
+
+  cloud_top_temperature_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_134, IR_108, IR_120]
+    standard_name: cloudtop
+
+  cirrus_detection_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_087, IR_108, IR_134]
+    standard_name: cloudtop
+
+  thin_cirrus_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_134, IR_087, IR_108]
+    standard_name: cloudtop
+
+  opaque_ice_cloud_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_108, IR_087, IR_134]
+    standard_name: cloudtop
+
+  low_cloud_thermal:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_039, IR_108, IR_087]
+    standard_name: night_fog
+
+  fog_depth_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_039, IR_120, IR_108]
+    standard_name: night_fog
+
+  nocturnal_stratus_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_120, IR_039, IR_108]
+    standard_name: night_microphysics
+
+  cloud_layering_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_087, IR_039, IR_120]
+    standard_name: night_microphysics
+
+  ice_water_phase_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_039, IR_087, IR_120]
+    standard_name: night_microphysics
+
+  convective_growth_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_062, IR_039, IR_108]
+    standard_name: convection
+
+  severe_convection_thermal:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_062, IR_120, IR_108]
+    standard_name: convection
+
+  tropical_convection_thermal:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_073, IR_039, IR_120]
+    standard_name: convection
+
+  overshooting_top_thermal:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_039, WV_062, IR_108]
+    standard_name: convection
+
+  cold_ring_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_134, IR_120, IR_108]
+    standard_name: convection
+
+  storm_anvil_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_120, WV_062, IR_134]
+    standard_name: convection
+
+  rainfall_potential_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [WV_073, IR_108, IR_039]
+    standard_name: convection
+
+  lightning_risk_proxy:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_039, WV_073, IR_108]
+    standard_name: convection
+
+  fire_hotspot_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_039, IR_120, IR_087]
+    standard_name: fire_temperature
+
+  fire_context_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_039, IR_087, IR_134]
+    standard_name: fire_temperature
+
+  wildfire_temperature_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_039, IR_134, IR_108]
+    standard_name: fire_temperature
+
+  smoke_dust_day:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [VIS006, VIS008, IR_016]
+    standard_name: natural_color
+
+  burn_scar_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_016, VIS008, VIS006]
+    standard_name: natural_color
+
+  vegetation_contrast_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [VIS008, IR_016, VIS006]
+    standard_name: natural_color
+
+  vegetation_moisture_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [IR_016, VIS006, VIS008]
+    standard_name: natural_color
+
+  snow_cloud_discrimination:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [VIS008, VIS006, IR_016]
+    standard_name: snow
+
+  daytime_cloud_phase_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [VIS006, IR_016, IR_108]
+    standard_name: day_microphysics
+
+  daytime_fog_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [VIS008, IR_039, IR_108]
+    standard_name: day_microphysics
+
+  coastal_aerosol_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [VIS006, IR_016, VIS008]
+    standard_name: natural_color
+
+  land_ocean_contrast_rgb:
+    compositor: !!python/name:satpy.composites.core.GenericCompositor
+    prerequisites: [VIS006, VIS008, IR_039]
+    standard_name: natural_color

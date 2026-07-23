@@ -1,0 +1,17 @@
+{
+  "name": "msg-hrit-terrestrial-archive-explorer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MSG HRIT Terrestrial Archive Explorer — discovery, sample download, processing, and browse UI",
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c cyan,teal \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && .venv\\Scripts\\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000",
+    "dev:backend:reload": "cd backend && .venv\\Scripts\\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000",
+    "dev:frontend": "cd frontend && npm run dev",
+    "benchmark:processing": "cd backend && .venv\\Scripts\\python.exe -m benchmarks.benchmark_processing",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && .venv\\Scripts\\python.exe -m pip install -r requirements.txt"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
