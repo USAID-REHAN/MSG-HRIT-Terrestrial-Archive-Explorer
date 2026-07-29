@@ -1,8 +1,7 @@
-# Data (raw NAT files, processed images, SQLite) — except bundled demo day
-data/*
-!data/demo/
-!data/demo/**
-/data/
+# Local runtime data (gitignored) — except bundled demo under data/demo/
+/data/*
+!/data/demo/
+!/data/demo/**
 
 # Python
 backend/.venv/

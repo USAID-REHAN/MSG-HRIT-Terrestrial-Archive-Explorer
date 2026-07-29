@@ -1,0 +1,52 @@
+{
+  "bounds": {
+    "east": 126.69346086505226,
+    "north": 81.26157391566812,
+    "semantics": "pixel_edges",
+    "south": -81.25654959813352,
+    "west": -35.699247367808965
+  },
+  "dimensions": {
+    "height": 1025,
+    "width": 1024
+  },
+  "enhancement": {
+    "dataset": "VIS006",
+    "history": [
+      {
+        "offset": -0.0,
+        "scale": "0.01"
+      },
+      {
+        "gamma": 1.5
+      }
+    ],
+    "identity": "satpy.enhancements.enhancer.get_enhanced_image",
+    "mode": "default"
+  },
+  "orientation": {
+    "east_right": true,
+    "north_up": true,
+    "upper_right_corner": "NE"
+  },
+  "preprocessing": null,
+  "product": "VIS006",
+  "product_kind": "channel",
+  "resampler": "bilinear",
+  "source_crs_parameters": {
+    "a": 6378169,
+    "h": 35785831,
+    "lon_0": 45.5,
+    "no_defs": null,
+    "proj": "geos",
+    "rf": 295.488065897014,
+    "type": "crs",
+    "units": "m",
+    "x_0": 0,
+    "y_0": 0
+  },
+  "source_longitude_of_projection_origin": 45.5,
+  "source_timestamp": "2026-06-22T09:00:00Z",
+  "target_crs": "EPSG:4326",
+  "version": "1.0.0"
+}
