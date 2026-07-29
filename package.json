@@ -9,7 +9,8 @@
     "dev:backend:reload": "cd backend && .venv\\Scripts\\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000",
     "dev:frontend": "cd frontend && npm run dev",
     "benchmark:processing": "cd backend && .venv\\Scripts\\python.exe -m benchmarks.benchmark_processing",
-    "install:all": "npm install && cd frontend && npm install && cd ../backend && .venv\\Scripts\\python.exe -m pip install -r requirements.txt"
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && .venv\\Scripts\\python.exe -m pip install -r requirements.txt",
+    "export:demo": "cd backend && .venv\\Scripts\\python.exe scripts\\export_demo_bundle.py"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

@@ -1,6 +1,9 @@
 # Data (raw NAT files, processed images, SQLite)
 /data/
 data/
+# Bundled clone-and-run demo (2026-06-22 sample day)
+!data/demo/
+!data/demo/**
 
 # Python
 backend/.venv/

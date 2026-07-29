@@ -12,6 +12,7 @@ from app.api.routes import browse, discovery, final_globes, globe, jobs
 from app.api.schemas import HealthResponse
 from app.config import get_settings
 from app.db.session import get_session_factory, init_db
+from app.demo_bootstrap import install_demo_bundle_if_needed
 from app.jobs.manager import job_manager
 from app.reference.product_reference import seed_product_reference
 
@@ -26,6 +27,8 @@ logger = logging.getLogger(__name__)
 async def lifespan(_app: FastAPI):
     settings = get_settings()
     settings.ensure_data_dirs()
+    if install_demo_bundle_if_needed(settings):
+        logger.info("Bundled demo catalog ready for %s", settings.data_root)
     init_db()
     factory = get_session_factory()
     db = factory()

@@ -41,6 +41,17 @@ This starts:
 - Backend API — `http://127.0.0.1:8000` (docs at `/docs`)
 - Frontend UI — `http://127.0.0.1:3000`
 
+On first run, if `data/catalog.sqlite3` is missing, the backend automatically installs the bundled **demo day** (`2026-06-22`: daytime / twilight / nighttime sample timeslots with full products). Clone the repo with Git LFS enabled:
+
+```bash
+git lfs install
+git clone https://github.com/USAID-REHAN/MSG-HRIT-Terrestrial-Archive-Explorer.git
+cd MSG-HRIT-Terrestrial-Archive-Explorer
+git lfs pull
+```
+
+Set `ARCHIVE_BASE_URL` in your local `.env` only when you want to discover/download from a live archive server.
+
 On Windows, the default backend script runs **without** uvicorn `--reload` so file-watch restarts do not tear down the frontend via `concurrently`. Use `npm run dev:backend:reload` if you want hot-reload on the API alone.
 
 ## Typical workflow

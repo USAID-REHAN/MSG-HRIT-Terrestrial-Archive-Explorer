@@ -1,0 +1,2 @@
+# Native HRIT files exceed GitHub's 100 MB limit — store via Git LFS.
+data/demo/**/*.nat filter=lfs diff=lfs merge=lfs -text
